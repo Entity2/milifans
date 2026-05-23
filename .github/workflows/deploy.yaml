@@ -36,7 +36,28 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+#    steps:
+     # - name: Deploy to GitHub Pages
+      #  id: deployment
+       # uses: actions/deploy-pages@v4
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Checkout your repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # 锁定稳定版 Node 环境
+
+      # 💡 核心修改 1：移除之前的 cache: 'npm' 行，避免因为缺锁文件报错
+
+      - name: Install dependencies
+        run: npm install  # 💡 核心修改 2：把 npm ci 改成 npm install，它会自动兼容并生成环境
+
+      - name: Build with Astro
+        run: npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
