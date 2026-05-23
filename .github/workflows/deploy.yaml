@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
@@ -10,54 +10,51 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout your repository using git
-        uses: actions/checkout@v4
-
-      # 【新增这一步】强制使用 Node.js v22
-      - name: Setup Node.js v22
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: "npm" # 顺便开启缓存，下次打包会快很多
-
-      - name: Install, build, and upload your site
-        uses: withastro/action@v3
-        with:
-          # 告诉 Astro 插件不需要它再去重复安装 Node 了
-          node-version: 22
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-#    steps:
-     # - name: Deploy to GitHub Pages
-      #  id: deployment
-       # uses: actions/deploy-pages@v4
     steps:
       - name: Checkout your repository
         uses: actions/checkout@v4
 
+      # 💡 核心修改 1：在搭建 Node 之前，先在云端把 pnpm 装好
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8 # 指定使用 pnpm v8 或更高版本
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20 # 锁定稳定版 Node 环境
+          node-version: 20
+          cache: 'pnpm' # 💡 核心修改 2：把缓存模式改成 pnpm
 
-      # 💡 核心修改 1：移除之前的 cache: 'npm' 行，避免因为缺锁文件报错
-
+      # 💡 核心修改 3：使用 pnpm 的规范命令安装依赖
       - name: Install dependencies
-        run: npm install  # 💡 核心修改 2：把 npm ci 改成 npm install，它会自动兼容并生成环境
+        run: pnpm install --frozen-lockfile
 
+      # 💡 核心修改 4：使用 pnpm 打包
       - name: Build with Astro
-        run: npm run build
+        run: pnpm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
