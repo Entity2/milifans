@@ -18,7 +18,7 @@ $<==>\forall b∈B,∃a∈A, s.t.$   $b=f(a)$
 ##  结论
 ### 定理1
 数域$\mathbb{K}$上的两个有限维线性空间$V$和$V'$同构<br/>
-$<==>$$\dim V$=$\dim V'$<br/>
+$<==>\dim V$=$\dim V'$<br/>
 并且满足交换律结合率
 ### 定理2
 $dim (V_1 +V_2)=dim V_1 +dim V_2 - dim (V_1 \cap V_2)$
