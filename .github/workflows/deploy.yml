@@ -16,6 +16,10 @@ jobs:
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+          
       - name: Install, build, and upload your site
         uses: withastro/action@v3
 
@@ -25,9 +29,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-steps:
-      - name: Checkout your repository using git
-        uses: actions/checkout@v4
-        with:
-          submodules: true     # 允许拉取子模块
-          fetch-depth: 0       # 拉取完整历史记录
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
