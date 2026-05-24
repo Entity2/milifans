@@ -495,11 +495,16 @@ function scrollFunction() {
 }
 window.onscroll = scrollFunction
 
+let resizeTimeout;
 window.onresize = () => {
-	// calculate the --banner-height-extend, which needs to be a multiple of 4 to avoid blurry text
-	let offset = Math.floor(window.innerHeight * (BANNER_HEIGHT_EXTEND / 100));
-	offset = offset - offset % 4;
-	document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
+    // 清除上一次的定时器，实现“防抖”
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        // calculate the --banner-height-extend, which needs to be a multiple of 4 to avoid blurry text
+        let offset = Math.floor(window.innerHeight * (BANNER_HEIGHT_EXTEND / 100));
+        offset = offset - offset % 4;
+        document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
+    }, 100); // 延迟 100 毫秒执行
 }
 
 </script>
