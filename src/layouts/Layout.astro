@@ -495,10 +495,10 @@ function scrollFunction() {
 }
 window.onscroll = scrollFunction
 
-let resizeTimeout;
+let resizeTimeout: ReturnType<typeof setTimeout> | undefined;
 window.onresize = () => {
     // 清除上一次的定时器，实现“防抖”
-    clearTimeout(resizeTimeout);
+    if (resizeTimeout) clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
         // calculate the --banner-height-extend, which needs to be a multiple of 4 to avoid blurry text
         let offset = Math.floor(window.innerHeight * (BANNER_HEIGHT_EXTEND / 100));
