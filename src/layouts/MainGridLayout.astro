@@ -85,12 +85,9 @@ const mainPanelTop = siteConfig.banner.enable
                 
                 <!-- 新增：左侧吸附式常驻目录 -->
                 {siteConfig.toc.enable && (
-                    <div class="hidden lg:block w-full lg:sticky lg:top-24 lg:max-h-[calc(100vh-8rem)] overflow-y-scroll hide-scrollbar onload-animation">
-                        <!-- 保留 relative，用来给淡蓝色指示器提供精确坐标系 -->
+                    <div class="hidden lg:block sticky top-24 w-full h-[calc(100vh_-_10rem)] overflow-y-scroll hide-scrollbar onload-animation">
                         <div id="toc" class="w-full h-full transition-swup-fade relative py-8">
-                            <div class="relative max-w-[var(--page-width)] mx-auto lg:mx-0 lg:ml-24">
                             <TOC headings={headings}></TOC>
-                                </div>
                         </div>
                     </div>
                 )}
