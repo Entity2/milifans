@@ -1,11 +1,10 @@
 ---
-title: 映射与集合论
+title: '映射与集合论'
 published: 2026-05-24
-description: 知识分享<br/>
+description: '知识分享'
 image:
-tags:
-  - 高等代数
-category: Study
+tags: ["高等代数"]
+category: 'Study'
 draft: false
 ---
 ## 映射 
