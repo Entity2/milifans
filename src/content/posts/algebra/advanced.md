@@ -2,11 +2,11 @@
 title: '映射与集合论'
 published: 2026-05-24
 description: '知识分享'
-image:
 tags: ["高等代数"]
 category: 'Study'
 draft: false
 ---
+
 ## 映射 
 ### 单射
 $<==>$A中不同元素在f下的像不相等<br/>
