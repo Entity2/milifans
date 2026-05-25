@@ -29,3 +29,7 @@ yarn.lock
 # ide
 .idea
 *.iml
+
+# obsidian
+
+/Users/arch/fuwari-main/src/content/posts/.obsidian
