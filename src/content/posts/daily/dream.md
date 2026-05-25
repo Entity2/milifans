@@ -1,8 +1,8 @@
 ---
 title: ’梦‘
 published: 2026-05-25
-tags:
-  - 梦
+description: '梦引发的一系列思考'
+tags: ["梦"]
 category: ’日常‘
 draft: false
 ---
